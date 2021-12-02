@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prova</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <div>
+    <h2>Brasil</h2>
+    <input type="number" class="Brasil" placeholder="PIB">
+  </div>
+
+  <div>
+    <h2>Japão</h2>
+    <input type="number" class="Japão" placeholder="PIB">
+  </div>
+
+  <div>
+    <h2>China</h2>
+    <input type="number" class="China" placeholder="PIB">
+  </div>
+
+  <div>
+    <h2>Argentina</h2>
+    <input type="number" class="Argentina" placeholder="PIB">
+  </div>
+
+  <div>
+    <h2>França</h2>
+    <input type="number" class="França" placeholder="PIB">
+  </div>
+
+  <div>
+    <h2>Estados Unidos</h2>
+    <input type="number" class="EstadosUnidos" placeholder="PIB">
+  </div>
+
+  <div>
+    <h2>Canadá</h2>
+    <input type="number" class="Canada" placeholder="PIB">
+  </div>
+  <br>
+
+  <button id="download">Baixar Planilha</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"
+    integrity="sha512-jDEmOIskGs/j5S3wBWQAL4pOYy3S5a0y3Vav7BgXHnCVcUBXkf1OqzYS6njmDiKyqes22QEX8GSIZZ5pGk+9nA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+
+    const inputBrasil = document.querySelector(".Brasil");
+    const inputJapão = document.querySelector(".Japão");
+    const inputChina = document.querySelector(".China");
+    const inputArgentina = document.querySelector(".Argentina");
+    const inputFrança = document.querySelector(".França");
+    const inputEstadosUnidos = document.querySelector(".EstadosUnidos");
+    const inputCanada = document.querySelector(".Canada");
+
+    const downloadXLSX = () => {
+      const wb = XLSX.utils.book_new();
+
+      wb.Props = {
+        Title: 'Relatório',
+        Subject: 'PIB',
+        Author: 'Igor',
+        CreatedDate: new Date(),
+      };
+
+      wb.SheetNames.push('Relatório 1');
+
+      const dados = [
+        ['Brasil', 'Japão', 'China', 'Argentina', 'França', 'Estados Unidos', 'Canadá'],
+        [inputBrasil.value, inputJapão.value, inputChina.value, inputArgentina.value, inputFrança.value, inputEstadosUnidos.value, inputCanada.value,]
+      ];
+
+      const ws = XLSX.utils.aoa_to_sheet(dados);
+
+      wb.Sheets['Relatório 1'] = ws;
+
+      XLSX.writeFile(wb, 'aval.xlsx', { bookType: 'xlsx', type: 'bynary' });
+    };
+
+    document.getElementById('download').addEventListener('click', () => {
+      downloadXLSX();
+    })
+  </script>
+</body>
+
+</html>
